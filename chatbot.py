@@ -37,7 +37,7 @@ class Chatbot:
         elif mood == MOOD_NEUTRAL:
             return RESPONSES_NEUTRAL[response_number]
         else:
-            return MOOD_NEGATIVE[response_number]
+            return RESPONSES_NEGATIVE[response_number]
 
 
 if __name__ == '__main__':
