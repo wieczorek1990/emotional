@@ -55,7 +55,7 @@ class Messenger(BaseMessenger):
         if text != 'mood':
             mood = self.get_mood(sender_id, text)
             response_text = Chatbot.get_response(mood)
-            self.send({'text': '{0} ({1})'.format(response_text, mood)}, 'RESPONSE')
+            self.send({'text': response_text}, 'RESPONSE')
         else:
             mood = self.get_current_mood(sender_id)
             self.send({'text': mood}, 'RESPONSE')
