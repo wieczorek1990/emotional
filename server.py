@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from fbmessenger import BaseMessenger
 
 from chatbot import Chatbot
-from mood import Mood
+from mood import Mood, MOOD_NEUTRAL
 
 
 app = Flask(__name__)
@@ -34,7 +34,7 @@ class Messenger(BaseMessenger):
         if user:
             return user.mood
         else:
-            'neutral'
+            MOOD_NEUTRAL
 
     @staticmethod
     def get_mood(sender_id, text):

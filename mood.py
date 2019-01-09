@@ -1,10 +1,11 @@
-import json
 import os
 
 from watson_developer_cloud import ToneAnalyzerV3
 
-from chatbot import MOOD_POSITIVE, MOOD_NEUTRAL, MOOD_NEGATIVE
 
+MOOD_POSITIVE = 'positive'
+MOOD_NEUTRAL= 'neutral'
+MOOD_NEGATIVE = 'negative'
 
 TONE_POSITIVE = {'joy'}
 TONE_NEGATIVE = {'anger', 'fear', 'sadness'}

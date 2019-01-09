@@ -1,9 +1,7 @@
 import random
 
+from mood import MOOD_POSITIVE, MOOD_NEUTRAL
 
-MOOD_POSITIVE = 'positive'
-MOOD_NEUTRAL= 'neutral'
-MOOD_NEGATIVE = 'negative'
 
 RESPONSES_POSITIVE = [
     'Positive about that.',
@@ -38,9 +36,3 @@ class Chatbot:
             return RESPONSES_NEUTRAL[response_number]
         else:
             return RESPONSES_NEGATIVE[response_number]
-
-
-if __name__ == '__main__':
-    import sys
-    mood = sys.argv[1]
-    print(Chatbot.get_response(mood))
