@@ -1,3 +1,4 @@
 flask==1.0.2
 fbmessenger==5.3.2
 flask_sqlalchemy==2.3.2
+watson-developer-cloud==2.5.2
