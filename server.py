@@ -1,11 +1,80 @@
 import os
 from flask import Flask, request
+from flask_sqlalchemy import SQLAlchemy
+from fbmessenger import BaseMessenger
 
-from chatbot import Messenger
+from chatbot import Chatbot
+from mood import Mood
 
 
 app = Flask(__name__)
 app.debug = True
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/emotional.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+db = SQLAlchemy(app)
+
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    messenger_id = db.Column(db.String(16), unique=True, nullable=False)
+    mood = db.Column(db.String(16), nullable=False)
+
+    def __repr__(self):
+        return '<User %r>' % self.username
+
+
+class Messenger(BaseMessenger):
+    def __init__(self, page_access_token):
+        self.page_access_token = page_access_token
+        super(Messenger, self).__init__(self.page_access_token)
+
+    @staticmethod
+    def get_current_mood(sender_id):
+        user = User.query.filter_by(messenger_id=sender_id).first()
+        if user:
+            return user.mood
+        else:
+            'neutral'
+
+    @staticmethod
+    def get_mood(sender_id, text):
+        user = User.query.filter_by(messenger_id=sender_id).first()
+        mood = Mood.get(text)
+        if user:
+            user.mood = mood
+        else:
+            user = User(messenger_id=sender_id, mood=mood)
+            db.session.add(user)
+        db.session.commit()
+        return mood
+
+    def message(self, message):
+        text = message['message']['text']
+        sender_id = message['sender']['id']
+
+        if text != 'mood':
+            mood = self.get_mood(sender_id, text)
+            response_text = Chatbot.get_response(mood)
+            self.send({'text': '{0} ({1})'.format(response_text, mood)}, 'RESPONSE')
+        else:
+            mood = self.get_current_mood(sender_id)
+            self.send({'text': mood}, 'RESPONSE')
+
+    def delivery(self, message):
+        pass
+
+    def read(self, message):
+        pass
+
+    def account_linking(self, message):
+        pass
+
+    def postback(self, message):
+        pass
+
+    def optin(self, message):
+        pass
+
 
 messenger = Messenger(os.environ.get('FB_PAGE_TOKEN'))
 
@@ -22,4 +91,4 @@ def webhook():
 
 
 if __name__ == '__main__':
-    app.run(port=5000)
+    app.run(host='0.0.0.0', port=5000)
