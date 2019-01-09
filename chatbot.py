@@ -1,5 +1,8 @@
 import random
 
+from fbmessenger import BaseMessenger
+
+
 EMOTION_POSITIVE = 'positive'
 EMOTION_NEUTRAL= 'neutral'
 EMOTION_NEGATIVE = 'negative'
@@ -36,6 +39,30 @@ class Chatbot:
             return RESPONSES_NEUTRAL[response_number]
         else:
             return EMOTION_NEGATIVE[response_number]
+
+
+class Messenger(BaseMessenger):
+    def __init__(self, page_access_token):
+        self.page_access_token = page_access_token
+        super(Messenger, self).__init__(self.page_access_token)
+
+    def message(self, message):
+        self.send({'text': 'Received: {0}'.format(message['message']['text'])}, 'RESPONSE')
+
+    def delivery(self, message):
+        pass
+
+    def read(self, message):
+        pass
+
+    def account_linking(self, message):
+        pass
+
+    def postback(self, message):
+        pass
+
+    def optin(self, message):
+        pass
 
 
 if __name__ == '__main__':
