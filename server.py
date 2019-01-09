@@ -39,14 +39,15 @@ class Messenger(BaseMessenger):
     @staticmethod
     def get_mood(sender_id, text):
         user = User.query.filter_by(messenger_id=sender_id).first()
-        mood = Mood().get(text)
+        message_mood = Mood().get(text)
         if user:
-            user.mood = mood
+            next_mood = Mood.get_next(user.mood, message_mood)
+            user.mood = next_mood
         else:
-            user = User(messenger_id=sender_id, mood=mood)
+            user = User(messenger_id=sender_id, mood=message_mood)
             db.session.add(user)
         db.session.commit()
-        return mood
+        return user.mood
 
     def message(self, message):
         text = message['message']['text']

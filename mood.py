@@ -6,7 +6,8 @@ from watson_developer_cloud import ToneAnalyzerV3
 MOOD_POSITIVE = 'positive'
 MOOD_NEUTRAL= 'neutral'
 MOOD_NEGATIVE = 'negative'
-
+MOOD_MAPPING = {MOOD_POSITIVE: 1, MOOD_NEUTRAL: 0, MOOD_NEGATIVE: -1}
+MOOD_REVERSE_MAPPING = {1: MOOD_POSITIVE, 0: MOOD_NEUTRAL, -1: MOOD_NEGATIVE}
 TONE_POSITIVE = {'joy'}
 TONE_NEGATIVE = {'anger', 'fear', 'sadness'}
 
@@ -39,6 +40,17 @@ class Mood:
                 return MOOD_NEGATIVE
 
         return MOOD_NEUTRAL
+
+    @staticmethod
+    def get_next(current_mood, next_mood):
+        current_index = MOOD_MAPPING[current_mood]
+        next_index = MOOD_MAPPING[next_mood]
+        index = current_index + next_index
+        if index < -1:
+            index = -1
+        elif index > 1:
+            index = 1
+        return MOOD_REVERSE_MAPPING[index]
 
 
 if __name__ == '__main__':
