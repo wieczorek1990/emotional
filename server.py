@@ -20,7 +20,7 @@ class User(db.Model):
     mood = db.Column(db.String(16), nullable=False)
 
     def __repr__(self):
-        return '<User %r>' % self.username
+        return '<User {} {} {}>'.format(self.id, self.messenger_id, self.mood)
 
 
 class Messenger(BaseMessenger):
