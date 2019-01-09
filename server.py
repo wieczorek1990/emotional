@@ -39,7 +39,7 @@ class Messenger(BaseMessenger):
     @staticmethod
     def get_mood(sender_id, text):
         user = User.query.filter_by(messenger_id=sender_id).first()
-        mood = Mood.get(text)
+        mood = Mood().get(text)
         if user:
             user.mood = mood
         else:
