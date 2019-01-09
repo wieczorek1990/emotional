@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from fbmessenger import BaseMessenger
 
 from chatbot import Chatbot
-from mood import Mood, MOOD_POSITIVE, MOOD_NEUTRAL, MOOD_NEGATIVE
+from mood import Mood, MOOD_NEUTRAL
 
 
 app = Flask(__name__)
