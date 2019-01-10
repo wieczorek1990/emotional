@@ -1,0 +1,5 @@
+runtime: python37
+env_variables:
+  IAM_API_KEY: ''
+  FB_PAGE_TOKEN: ''
+  FB_VERIFY_TOKEN: ''
