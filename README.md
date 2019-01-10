@@ -30,6 +30,15 @@ IAM_API_KEY= python3 mood.py 'I feel very bad about this.'
 negative
 ```
 
+Deployment to GAE
+
+```bash
+# gcloud init
+cp app.yaml.example app.yaml
+# Edit app.yaml
+gcloud app deploy
+```
+
 ## Time spent
 
 ### Day 1.
