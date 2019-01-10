@@ -12,7 +12,6 @@ app.debug = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/emotional.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
-db.create_all()
 
 
 class User(db.Model):
@@ -22,6 +21,9 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User {} {} {}>'.format(self.id, self.messenger_id, self.mood)
+
+
+db.create_all()
 
 
 class Messenger(BaseMessenger):
